@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>domainname.plus · Premium Digital Asset | Contact</title>
+    <meta name="description" content="domainname.plus premium domain for sale. Contact via WeChat or Email.">
+    <meta name="keywords" content="domainname.plus, domain, for sale, contact, WeChat, Email">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ========== 全局变量与重置 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 亮色主题变量 (默认) */
+        :root {
+            --bg-body: #e6efff45;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-primary: #1e293b;
+            --text-secondary: #334155;
+            --text-muted: #5b6e8c;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border-light: rgba(0, 0, 0, 0.1);
+            --footer-bg: rgba(0, 18, 165, 0.05);
+            --navbar-bg: #2B2A4C;
+            --navbar-text: #fff;
+            --link-shadow: inset 0 -10px 0 #cbeeff;
+            --icon-wechat: #2cbd2c;
+            --icon-email: #ea4335;
+        }
+
+        /* 暗黑主题变量 (通过 body 上的 dark-mode 类启用) */
+        body.dark-mode {
+            --bg-body: #0a0e1a;
+            --card-bg: rgba(18, 25, 45, 0.85);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --border-light: rgba(255, 255, 255, 0.15);
+            --footer-bg: rgba(0, 0, 0, 0.3);
+            --navbar-bg: #050b16;
+            --navbar-text: #fff;
+            --link-shadow: inset 0 -10px 0 #cbeeff00;
+            --icon-wechat: #4caf50;
+            --icon-email: #ff6b6b;
+        }
+
+        body {
+            font-family: 'Manrope', -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-body);
+            min-height: 100vh;
+            color: var(--text-primary);
+            transition: background-color 0.2s, color 0.2s;
+            position: relative;
+        }
+
+        /* ========== 背景动画层 ========== */
+        .area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .circles li {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgb(141 163 253);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+        }
+        .circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+        .circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+        .circles li:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+        .circles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+        .circles li:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+        .circles li:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+        .circles li:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+        .circles li:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+        .circles li:nth-child(9) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
+        .circles li:nth-child(10) { left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+
+        @keyframes animate {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+        }
+
+        /* ========== 导航栏 ========== */
+        .navbar {
+            background-color: var(--navbar-bg);
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            transition: background-color 0.2s;
+        }
+        .navbar-brand {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 30px;
+            color: var(--navbar-text);
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo-img {
+            width: auto;
+            height: 32px;
+            filter: brightness(0) invert(1);
+        }
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .nav-home {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        .nav-home:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        .lang-switch {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: background 0.2s;
+        }
+        .lang-switch:hover {
+            background: var(--accent);
+        }
+        .switch-container {
+            position: relative;
+            display: inline-block;
+            width: 2.5em;
+            height: 1.5em;
+            margin-left: 10px;
+        }
+        .switch-container input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .switch-container .slider {
+            --background: linear-gradient(to right, #457b9d, #2b2a4c);
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--background);
+            transition: background-color 0.5s;
+            border-radius: 20px;
+        }
+        .switch-container .slider:before {
+            position: absolute;
+            content: "";
+            height: 1em;
+            width: 1em;
+            border-radius: 50%;
+            left: 10%;
+            bottom: 17%;
+            box-shadow: inset 15px -4px 0px 15px #f8ea27;
+            background: var(--background);
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+        .switch-container input:checked + .slider {
+            background-color: #000;
+        }
+        .switch-container input:checked + .slider:before {
+            transform: translateX(100%);
+            box-shadow: inset 8px -4px 0px 0px #f8f8f4;
+        }
+
+        /* ========== 主内容区 ========== */
+        .container-index {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 90px 20px 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .contact-card {
+            width: 100%;
+            max-width: 790px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            padding: 32px 28px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-light);
+        }
+        .domain {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .domain span {
+            background: linear-gradient(135deg, #2563eb, #3b82f6, #8b5cf6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .tagline {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.3rem;
+            display: inline-block;
+            border-bottom: 1px dashed var(--border-light);
+        }
+        .description {
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto 1.8rem auto;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        .contact-methods {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .contact-item {
+            background: rgba(0, 0, 0, 0.03);
+            backdrop-filter: blur(4px);
+            border-radius: 16px;
+            padding: 1.2rem 1.2rem;
+            min-width: 210px;
+            border: 1px solid var(--border-light);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        body.dark-mode .contact-item {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .contact-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+        .contact-icon {
+            font-size: 2.4rem;
+            margin-bottom: 0.6rem;
+        }
+        .contact-icon .fa-weixin {
+            color: var(--icon-wechat);
+        }
+        .contact-icon .fa-envelope {
+            color: var(--icon-email);
+        }
+        .contact-label {
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            font-size: 1rem;
+        }
+        .contact-value {
+            font-family: monospace;
+            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.06);
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+            display: inline-block;
+            margin: 0.5rem 0;
+            word-break: break-all;
+        }
+        body.dark-mode .contact-value {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .copy-btn {
+            background: rgba(0, 0, 0, 0.06);
+            border: none;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: 0.2s;
+        }
+        body.dark-mode .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .copy-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 3rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .action-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.01);
+        }
+        .footer-note {
+            font-size: 0.7rem;
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+
+        /* 页脚 */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+            background-color: var(--footer-bg);
+            padding: 0.5em 0;
+            transition: background-color 0.2s;
+        }
+        footer a {
+            position: relative;
+            text-decoration: none;
+            box-shadow: var(--link-shadow);
+            color: #333;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        body.dark-mode footer a {
+            color: #fff;
+        }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #0f212ecc;
+            backdrop-filter: blur(12px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            color: #c0ffea;
+            font-weight: 500;
+            border: 1px solid #3b82f6;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: none;
+            z-index: 1000;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        .toast-msg.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        @media (max-width: 768px) {
+            .container-index { padding: 85px 16px 70px; }
+            .contact-card { padding: 24px 20px; }
+            .contact-methods { gap: 1rem; }
+            .contact-item { min-width: 100%; }
+            .nav-left { gap: 1rem; }
+            .logo-text { font-size: 1rem; }
+        }
+        @media (max-width: 480px) {
+            .navbar-brand { max-width: 100%; padding: 0 8px; }
+            .logo-img { height: 26px; }
+            .logo-text { font-size: 0.9rem; }
+            .nav-home { font-size: 0.85rem; }
+            .toast-msg { white-space: normal; bottom: 70px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="area">
+    <ul class="circles">
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
+    </ul>
+</div>
+
+<div class="navbar">
+    <div class="navbar-brand">
+        <div class="nav-left">
+            <div class="logo">
+                <!-- 可替换为自己的图片，高度建议32px -->
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E" alt="domainname.plus" class="logo-img">
+                <span class="logo-text">domainname.plus</span>
+            </div>
+            <a href="#" class="nav-home" id="homeLink">Home</a>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <button id="langToggle" class="lang-switch">中文</button>
+            <label class="switch-container">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="container-index">
+    <div class="contact-card">
+        <div class="domain">domainname<span>.plus</span></div>
+        <div class="tagline" id="taglineText">⚡ Premium Digital Asset | For Sale/Partnership ⚡</div>
+        <div class="description" id="descText">
+            A highly valuable .plus domain, perfect for subscription economy, SaaS, and innovative platforms.<br>
+            Now open for global inquiry. Reasonable offers or strategic cooperation are welcome.
+        </div>
+        <div class="contact-methods">
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fab fa-weixin fa-2x"></i></div>
+                <div class="contact-label" id="wechatLabel">WeChat</div>
+                <div class="contact-value" id="wechatValue">domainname_plus</div>
+                <button class="copy-btn" data-copy="wechatValue" id="copyWechatBtn">Copy</button>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon"><i class="fas fa-envelope fa-2x"></i></div>
+                <div class="contact-label" id="emailLabel">Email</div>
+                <div class="contact-value" id="emailValue">hello@domainname.plus</div>
+                <button class="copy-btn" data-copy="emailValue" id="copyEmailBtn">Copy</button>
+            </div>
+        </div>
+        <a href="mailto:hello@domainname.plus?subject=Inquiry%20about%20domainname.plus" class="action-btn" id="inquiryBtn">
+            ✉️ Send Inquiry
+        </a>
+        <div class="footer-note" id="noteText">Escrow supported · Fast transfer</div>
+    </div>
+</div>
+
+<footer>
+    <a href="https://domainname.plus/" target="_blank">2025 © domainname.plus</a>
+</footer>
+<div id="toastMsg" class="toast-msg">✅ Copied</div>
+
+<script>
+    // ============================================================
+    // 中英文双语数据
+    // ============================================================
+    const translations = {
+        en: {
+            tagline: "⚡ Premium Digital Asset | For Sale/Partnership ⚡",
+            desc: "A highly valuable .plus domain, perfect for subscription economy, SaaS, and innovative platforms.<br>Now open for global inquiry. Reasonable offers or strategic cooperation are welcome.",
+            wechatLabel: "WeChat",
+            emailLabel: "Email",
+            copyBtn: "Copy",
+            inquiry: "✉️ Send Inquiry",
+            note: "Escrow supported · Fast transfer",
+            toastCopyWechat: "WeChat ID copied",
+            toastCopyEmail: "Email address copied",
+            toastHome: "🏠 Home page (ready for your content)",
+            toastThemeDark: "🌙 Dark mode enabled",
+            toastThemeLight: "☀️ Light mode enabled",
+            toastLang: "🌐 Language switched to English",
+            toastInquiry: "📬 Opening email client — we look forward to hearing from you!"
+        },
+        zh: {
+            tagline: "⚡ 优质数字资产 | 待售/合作 ⚡",
+            desc: "极具商业价值的 .plus 域名，适合订阅经济、SaaS 及创新平台。<br>现面向全球买家开放，接受合理报价或战略合作。",
+            wechatLabel: "微信",
+            emailLabel: "邮箱",
+            copyBtn: "复制",
+            inquiry: "✉️ 发送询价邮件",
+            note: "支持第三方托管交易 · 快速过户",
+            toastCopyWechat: "微信号已复制",
+            toastCopyEmail: "邮箱地址已复制",
+            toastHome: "🏠 首页预留位置，可替换为实际页面链接",
+            toastThemeDark: "🌙 暗黑模式已启用",
+            toastThemeLight: "☀️ 明亮模式已启用",
+            toastLang: "🌐 已切换至中文",
+            toastInquiry: "📬 正在打开邮件客户端，期待您的联系！"
+        }
+    };
+
+    let currentLang = localStorage.getItem('domainname_lang') || 'en';
+
+    // DOM 元素
+    const taglineEl = document.getElementById('taglineText');
+    const descEl = document.getElementById('descText');
+    const wechatLabelEl = document.getElementById('wechatLabel');
+    const emailLabelEl = document.getElementById('emailLabel');
+    const copyWechatBtn = document.getElementById('copyWechatBtn');
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    const inquiryBtn = document.getElementById('inquiryBtn');
+    const noteEl = document.getElementById('noteText');
+    const langToggleBtn = document.getElementById('langToggle');
+
+    function updateLanguage(lang) {
+        const t = translations[lang];
+        if (!t) return;
+        taglineEl.innerHTML = t.tagline;
+        descEl.innerHTML = t.desc;
+        wechatLabelEl.innerText = t.wechatLabel;
+        emailLabelEl.innerText = t.emailLabel;
+        if (copyWechatBtn) copyWechatBtn.innerText = t.copyBtn;
+        if (copyEmailBtn) copyEmailBtn.innerText = t.copyBtn;
+        inquiryBtn.innerHTML = t.inquiry;
+        noteEl.innerText = t.note;
+        if (langToggleBtn) langToggleBtn.innerText = (lang === 'en' ? '中文' : 'English');
+        localStorage.setItem('domainname_lang', lang);
+        currentLang = lang;
+    }
+
+    function toggleLanguage() {
+        const newLang = currentLang === 'en' ? 'zh' : 'en';
+        updateLanguage(newLang);
+        showToast(translations[newLang].toastLang);
+    }
+
+    if (langToggleBtn) langToggleBtn.addEventListener('click', toggleLanguage);
+    updateLanguage(currentLang);
+
+    // ============================================================
+    // 深色模式切换 (使用 dark-mode 类确保样式覆盖)
+    // ============================================================
+    const darkToggle = document.getElementById('darkModeToggle');
+    const bodyEl = document.body;
+
+    // 获取存储的主题或系统偏好
+    const storedTheme = localStorage.getItem('domainname_theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    function applyTheme(isDark) {
+        if (isDark) {
+            bodyEl.classList.add('dark-mode');
+            if (darkToggle) darkToggle.checked = true;
+            localStorage.setItem('domainname_theme', 'dark');
+            showToast(translations[currentLang].toastThemeDark);
+        } else {
+            bodyEl.classList.remove('dark-mode');
+            if (darkToggle) darkToggle.checked = false;
+            localStorage.setItem('domainname_theme', 'light');
+            showToast(translations[currentLang].toastThemeLight);
+        }
+    }
+
+    // 初始化
+    if (storedTheme === 'dark') {
+        applyTheme(true);
+    } else if (storedTheme === 'light') {
+        applyTheme(false);
+    } else {
+        applyTheme(systemDark);
+    }
+
+    // 事件监听
+    if (darkToggle) {
+        darkToggle.addEventListener('change', (e) => {
+            applyTheme(e.target.checked);
+        });
+    }
+
+    // 监听系统主题变化（仅当没有手动设置时）
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('domainname_theme')) {
+            applyTheme(e.matches);
+        }
+    });
+
+    // ============================================================
+    // 复制功能
+    // ============================================================
+    const toastEl = document.getElementById('toastMsg');
+    let toastTimer = null;
+    function showToast(msg) {
+        if (!toastEl) return;
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2000);
+    }
+
+    function copyToClipboard(text, successMsg) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast(successMsg);
+        }).catch(() => {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast(successMsg);
+        });
+    }
+
+    if (copyWechatBtn) {
+        copyWechatBtn.addEventListener('click', () => {
+            const wechatId = document.getElementById('wechatValue').innerText.trim();
+            copyToClipboard(wechatId, translations[currentLang].toastCopyWechat);
+        });
+    }
+    if (copyEmailBtn) {
+        copyEmailBtn.addEventListener('click', () => {
+            const email = document.getElementById('emailValue').innerText.trim();
+            copyToClipboard(email, translations[currentLang].toastCopyEmail);
+        });
+    }
+
+    // Home 链接预留
+    const homeLink = document.getElementById('homeLink');
+    if (homeLink) {
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast(translations[currentLang].toastHome);
+        });
+    }
+
+    // 询价按钮提示
+    if (inquiryBtn) {
+        inquiryBtn.addEventListener('click', () => {
+            setTimeout(() => showToast(translations[currentLang].toastInquiry), 50);
+        });
+    }
+</script>
+</body>
+</html>
