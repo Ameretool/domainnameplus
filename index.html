@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
@@ -34,24 +34,28 @@
             --link-shadow: inset 0 -10px 0 #cbeeff;
             --icon-wechat: #2cbd2c;
             --icon-email: #ea4335;
+            --circle-color: rgba(37, 99, 235, 0.25);
+            --circle-color-light: rgba(37, 99, 235, 0.2);
         }
 
         /* 暗黑主题变量 (通过 body 上的 dark-mode 类启用) */
         body.dark-mode {
             --bg-body: #0a0e1a;
-            --card-bg: rgba(18, 25, 45, 0.85);
+            --card-bg: rgba(18, 25, 45, 0.92);
             --text-primary: #f1f5f9;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
             --accent: #3b82f6;
             --accent-hover: #60a5fa;
             --border-light: rgba(255, 255, 255, 0.15);
-            --footer-bg: rgba(0, 0, 0, 0.3);
+            --footer-bg: rgba(0, 0, 0, 0.5);
             --navbar-bg: #050b16;
-            --navbar-text: #fff;
+            --navbar-text: #e2e8f0;
             --link-shadow: inset 0 -10px 0 #cbeeff00;
             --icon-wechat: #4caf50;
-            --icon-email: #ff6b6b;
+            --icon-email: #ff8a8a;
+            --circle-color: rgba(59, 130, 246, 0.25);
+            --circle-color-light: rgba(59, 130, 246, 0.15);
         }
 
         body {
@@ -59,7 +63,7 @@
             background-color: var(--bg-body);
             min-height: 100vh;
             color: var(--text-primary);
-            transition: background-color 0.2s, color 0.2s;
+            transition: background-color 0.3s ease, color 0.2s ease;
             position: relative;
         }
 
@@ -90,9 +94,14 @@
             list-style: none;
             width: 20px;
             height: 20px;
-            background: rgb(141 163 253);
+            background: var(--circle-color);
             animation: animate 25s linear infinite;
             bottom: -150px;
+            transition: background 0.3s ease;
+        }
+        /* 让动画小球在暗色模式下稍微改变颜色 */
+        body.dark-mode .circles li {
+            background: var(--circle-color-light);
         }
         .circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
         .circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
@@ -106,20 +115,21 @@
         .circles li:nth-child(10) { left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
 
         @keyframes animate {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; border-radius: 0; }
             100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
         }
 
         /* ========== 导航栏 ========== */
         .navbar {
             background-color: var(--navbar-bg);
-            padding: 10px;
+            padding: 12px 16px;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 999;
-            transition: background-color 0.2s;
+            transition: background-color 0.3s ease, backdrop-filter 0.2s;
+            backdrop-filter: blur(2px);
         }
         .navbar-brand {
             max-width: 1000px;
@@ -127,7 +137,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 30px;
+            height: 40px;
             color: var(--navbar-text);
         }
         .nav-left {
@@ -142,8 +152,9 @@
         }
         .logo-img {
             width: auto;
-            height: 32px;
+            height: 28px;
             filter: brightness(0) invert(1);
+            transition: filter 0.2s;
         }
         .logo-text {
             font-size: 1.2rem;
@@ -155,72 +166,85 @@
         .nav-home {
             color: #fff;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            padding: 4px 8px;
+            padding: 4px 12px;
             border-radius: 6px;
             transition: background-color 0.2s;
         }
         .nav-home:hover {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.2);
         }
         .lang-switch {
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
+            padding: 5px 12px;
+            border-radius: 32px;
             font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
-            margin-left: 15px;
-            transition: background 0.2s;
+            margin-right: 10px;
+            transition: all 0.2s;
         }
         .lang-switch:hover {
             background: var(--accent);
+            border-color: transparent;
         }
+        /* 黑暗模式切换开关 - 增强样式 */
         .switch-container {
             position: relative;
-            display: inline-block;
-            width: 2.5em;
-            height: 1.5em;
-            margin-left: 10px;
+            display: inline-flex;
+            align-items: center;
+            width: 3rem;
+            height: 1.6rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
         }
         .switch-container input {
             opacity: 0;
             width: 0;
             height: 0;
+            position: absolute;
         }
         .switch-container .slider {
-            --background: linear-gradient(to right, #457b9d, #2b2a4c);
             position: absolute;
             cursor: pointer;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: var(--background);
-            transition: background-color 0.5s;
-            border-radius: 20px;
+            background: linear-gradient(145deg, #64748b, #334155);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 40px;
         }
         .switch-container .slider:before {
             position: absolute;
-            content: "";
-            height: 1em;
-            width: 1em;
+            content: "☀️";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            height: 1.3rem;
+            width: 1.3rem;
             border-radius: 50%;
-            left: 10%;
-            bottom: 17%;
-            box-shadow: inset 15px -4px 0px 15px #f8ea27;
-            background: var(--background);
-            transition: transform 0.5s, box-shadow 0.5s;
+            left: 4px;
+            bottom: 2px;
+            background-color: #ffdd88;
+            transition: transform 0.35s ease, background 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
-        .switch-container input:checked + .slider {
-            background-color: #000;
-        }
+        /* 暗黑模式下修改滑块图标和位置 */
         .switch-container input:checked + .slider:before {
-            transform: translateX(100%);
-            box-shadow: inset 8px -4px 0px 0px #f8f8f4;
+            transform: translateX(1.3rem);
+            content: "🌙";
+            background-color: #1e293b;
+            color: #ffd966;
+        }
+        /* 增加活跃反馈 */
+        .switch-container:active .slider:before {
+            scale: 0.95;
         }
 
         /* ========== 主内容区 ========== */
@@ -229,7 +253,7 @@
             z-index: 2;
             max-width: 1000px;
             margin: 0 auto;
-            padding: 90px 20px 80px;
+            padding: 100px 20px 80px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -240,12 +264,16 @@
             max-width: 790px;
             margin: 0 auto;
             background: var(--card-bg);
-            backdrop-filter: blur(5px);
-            border-radius: 10px;
-            padding: 32px 28px;
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 38px 32px;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15);
             border: 1px solid var(--border-light);
+            transition: background 0.3s, border-color 0.2s, box-shadow 0.3s;
+        }
+        body.dark-mode .contact-card {
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.6);
         }
         .domain {
             font-size: clamp(1.8rem, 5vw, 2.8rem);
@@ -278,23 +306,23 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+            gap: 1.8rem;
+            margin: 1.8rem 0;
         }
         .contact-item {
             background: rgba(0, 0, 0, 0.03);
             backdrop-filter: blur(4px);
-            border-radius: 16px;
-            padding: 1.2rem 1.2rem;
-            min-width: 210px;
+            border-radius: 24px;
+            padding: 1.2rem 1.5rem;
+            min-width: 230px;
             border: 1px solid var(--border-light);
-            transition: transform 0.2s, border-color 0.2s;
+            transition: transform 0.25s, border-color 0.2s, background 0.2s;
         }
         body.dark-mode .contact-item {
             background: rgba(255, 255, 255, 0.05);
         }
         .contact-item:hover {
-            transform: translateY(-4px);
+            transform: translateY(-5px);
             border-color: var(--accent);
         }
         .contact-icon {
@@ -331,13 +359,13 @@
             padding: 0.3rem 1rem;
             border-radius: 2rem;
             font-size: 0.7rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             color: var(--text-primary);
             transition: 0.2s;
         }
         body.dark-mode .copy-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
         }
         .copy-btn:hover {
             background: var(--accent);
@@ -349,19 +377,20 @@
             gap: 0.6rem;
             background: var(--accent);
             color: white;
-            padding: 0.7rem 1.5rem;
+            padding: 0.7rem 1.8rem;
             border-radius: 3rem;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
             margin-top: 0.8rem;
-            transition: all 0.2s;
+            transition: all 0.25s;
             border: none;
             cursor: pointer;
         }
         .action-btn:hover {
             background: var(--accent-hover);
-            transform: scale(1.01);
+            transform: scale(1.02);
+            box-shadow: 0 5px 12px rgba(37,99,235,0.3);
         }
         .footer-note {
             font-size: 0.7rem;
@@ -369,7 +398,6 @@
             opacity: 0.7;
         }
 
-        /* 页脚 */
         footer {
             position: fixed;
             bottom: 0;
@@ -377,41 +405,42 @@
             width: 100%;
             text-align: center;
             z-index: 2;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
             background-color: var(--footer-bg);
-            padding: 0.5em 0;
-            transition: background-color 0.2s;
+            padding: 0.6em 0;
+            transition: background-color 0.3s;
         }
         footer a {
             position: relative;
             text-decoration: none;
             box-shadow: var(--link-shadow);
-            color: #333;
+            color: var(--text-secondary);
             font-size: 14px;
             transition: color 0.2s;
         }
         body.dark-mode footer a {
-            color: #fff;
+            color: #cbd5e1;
         }
 
         .toast-msg {
             position: fixed;
-            bottom: 60px;
+            bottom: 70px;
             left: 50%;
             transform: translateX(-50%) scale(0.9);
             background: #0f212ecc;
             backdrop-filter: blur(12px);
-            padding: 0.5rem 1.2rem;
+            padding: 0.6rem 1.4rem;
             border-radius: 40px;
             color: #c0ffea;
             font-weight: 500;
             border: 1px solid #3b82f6;
             opacity: 0;
-            transition: 0.2s;
+            transition: opacity 0.2s, transform 0.2s;
             pointer-events: none;
             z-index: 1000;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             white-space: nowrap;
+            font-family: monospace;
         }
         .toast-msg.show {
             opacity: 1;
@@ -419,19 +448,22 @@
         }
 
         @media (max-width: 768px) {
-            .container-index { padding: 85px 16px 70px; }
-            .contact-card { padding: 24px 20px; }
-            .contact-methods { gap: 1rem; }
-            .contact-item { min-width: 100%; }
+            .container-index { padding: 90px 16px 70px; }
+            .contact-card { padding: 28px 20px; }
+            .contact-methods { gap: 1rem; flex-direction: column; align-items: center; }
+            .contact-item { min-width: 85%; }
             .nav-left { gap: 1rem; }
             .logo-text { font-size: 1rem; }
+            .navbar-brand { flex-wrap: wrap; gap: 8px; }
         }
         @media (max-width: 480px) {
-            .navbar-brand { max-width: 100%; padding: 0 8px; }
-            .logo-img { height: 26px; }
-            .logo-text { font-size: 0.9rem; }
-            .nav-home { font-size: 0.85rem; }
-            .toast-msg { white-space: normal; bottom: 70px; }
+            .navbar-brand { max-width: 100%; padding: 0; }
+            .logo-img { height: 22px; }
+            .logo-text { font-size: 0.85rem; }
+            .nav-home { font-size: 0.8rem; padding: 2px 8px; }
+            .toast-msg { white-space: normal; bottom: 75px; font-size: 0.75rem; }
+            .switch-container { width: 2.6rem; height: 1.4rem; }
+            .switch-container .slider:before { height: 1.1rem; width: 1.1rem; font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -448,15 +480,14 @@
     <div class="navbar-brand">
         <div class="nav-left">
             <div class="logo">
-                <!-- 可替换为自己的图片，高度建议32px -->
                 <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E" alt="domainname.plus" class="logo-img">
                 <span class="logo-text">domainname.plus</span>
             </div>
             <a href="#" class="nav-home" id="homeLink">Home</a>
         </div>
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 6px;">
             <button id="langToggle" class="lang-switch">中文</button>
-            <label class="switch-container">
+            <label class="switch-container" aria-label="Dark mode toggle">
                 <input type="checkbox" id="darkModeToggle">
                 <span class="slider"></span>
             </label>
@@ -494,189 +525,226 @@
 </div>
 
 <footer>
-    <a href="https://domainname.plus/" target="_blank">2025 © domainname.plus</a>
+    <a href="https://domainname.plus/" target="_blank" rel="noopener">2025 © domainname.plus</a>
 </footer>
 <div id="toastMsg" class="toast-msg">✅ Copied</div>
 
 <script>
-    // ============================================================
-    // 中英文双语数据
-    // ============================================================
-    const translations = {
-        en: {
-            tagline: "⚡ Premium Digital Asset | For Sale/Partnership ⚡",
-            desc: "A highly valuable .plus domain, perfect for subscription economy, SaaS, and innovative platforms.<br>Now open for global inquiry. Reasonable offers or strategic cooperation are welcome.",
-            wechatLabel: "WeChat",
-            emailLabel: "Email",
-            copyBtn: "Copy",
-            inquiry: "✉️ Send Inquiry",
-            note: "Escrow supported · Fast transfer",
-            toastCopyWechat: "WeChat ID copied",
-            toastCopyEmail: "Email address copied",
-            toastHome: "🏠 Home page (ready for your content)",
-            toastThemeDark: "🌙 Dark mode enabled",
-            toastThemeLight: "☀️ Light mode enabled",
-            toastLang: "🌐 Language switched to English",
-            toastInquiry: "📬 Opening email client — we look forward to hearing from you!"
-        },
-        zh: {
-            tagline: "⚡ 优质数字资产 | 待售/合作 ⚡",
-            desc: "极具商业价值的 .plus 域名，适合订阅经济、SaaS 及创新平台。<br>现面向全球买家开放，接受合理报价或战略合作。",
-            wechatLabel: "微信",
-            emailLabel: "邮箱",
-            copyBtn: "复制",
-            inquiry: "✉️ 发送询价邮件",
-            note: "支持第三方托管交易 · 快速过户",
-            toastCopyWechat: "微信号已复制",
-            toastCopyEmail: "邮箱地址已复制",
-            toastHome: "🏠 首页预留位置，可替换为实际页面链接",
-            toastThemeDark: "🌙 暗黑模式已启用",
-            toastThemeLight: "☀️ 明亮模式已启用",
-            toastLang: "🌐 已切换至中文",
-            toastInquiry: "📬 正在打开邮件客户端，期待您的联系！"
+    (function() {
+        // ============================================================
+        // 多语言配置
+        // ============================================================
+        const translations = {
+            en: {
+                tagline: "⚡ Premium Digital Asset | For Sale/Partnership ⚡",
+                desc: "A highly valuable .plus domain, perfect for subscription economy, SaaS, and innovative platforms.<br>Now open for global inquiry. Reasonable offers or strategic cooperation are welcome.",
+                wechatLabel: "WeChat",
+                emailLabel: "Email",
+                copyBtn: "Copy",
+                inquiry: "✉️ Send Inquiry",
+                note: "Escrow supported · Fast transfer",
+                toastCopyWechat: "✓ WeChat ID copied",
+                toastCopyEmail: "✓ Email address copied",
+                toastHome: "🏠 Home page (ready for your content)",
+                toastThemeDark: "🌙 Dark mode enabled",
+                toastThemeLight: "☀️ Light mode enabled",
+                toastLang: "🌐 Language switched to English",
+                toastInquiry: "📬 Opening email client — we look forward to hearing from you!"
+            },
+            zh: {
+                tagline: "⚡ 优质数字资产 | 待售/合作 ⚡",
+                desc: "极具商业价值的 .plus 域名，适合订阅经济、SaaS 及创新平台。<br>现面向全球买家开放，接受合理报价或战略合作。",
+                wechatLabel: "微信",
+                emailLabel: "邮箱",
+                copyBtn: "复制",
+                inquiry: "✉️ 发送询价邮件",
+                note: "支持第三方托管交易 · 快速过户",
+                toastCopyWechat: "✓ 微信号已复制",
+                toastCopyEmail: "✓ 邮箱地址已复制",
+                toastHome: "🏠 首页预留位置，可替换为实际页面链接",
+                toastThemeDark: "🌙 暗黑模式已启用",
+                toastThemeLight: "☀️ 明亮模式已启用",
+                toastLang: "🌐 已切换至中文",
+                toastInquiry: "📬 正在打开邮件客户端，期待您的联系！"
+            }
+        };
+
+        let currentLang = localStorage.getItem('domainname_lang') || 'en';
+
+        // DOM 元素绑定
+        const taglineEl = document.getElementById('taglineText');
+        const descEl = document.getElementById('descText');
+        const wechatLabelEl = document.getElementById('wechatLabel');
+        const emailLabelEl = document.getElementById('emailLabel');
+        const copyWechatBtn = document.getElementById('copyWechatBtn');
+        const copyEmailBtn = document.getElementById('copyEmailBtn');
+        const inquiryBtn = document.getElementById('inquiryBtn');
+        const noteEl = document.getElementById('noteText');
+        const langToggleBtn = document.getElementById('langToggle');
+
+        function updateLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+            if (taglineEl) taglineEl.innerHTML = t.tagline;
+            if (descEl) descEl.innerHTML = t.desc;
+            if (wechatLabelEl) wechatLabelEl.innerText = t.wechatLabel;
+            if (emailLabelEl) emailLabelEl.innerText = t.emailLabel;
+            if (copyWechatBtn) copyWechatBtn.innerText = t.copyBtn;
+            if (copyEmailBtn) copyEmailBtn.innerText = t.copyBtn;
+            if (inquiryBtn) inquiryBtn.innerHTML = t.inquiry;
+            if (noteEl) noteEl.innerText = t.note;
+            if (langToggleBtn) langToggleBtn.innerText = (lang === 'en' ? '中文' : 'English');
+            localStorage.setItem('domainname_lang', lang);
+            currentLang = lang;
         }
-    };
 
-    let currentLang = localStorage.getItem('domainname_lang') || 'en';
+        function toggleLanguage() {
+            const newLang = currentLang === 'en' ? 'zh' : 'en';
+            updateLanguage(newLang);
+            showToast(translations[newLang].toastLang);
+        }
 
-    // DOM 元素
-    const taglineEl = document.getElementById('taglineText');
-    const descEl = document.getElementById('descText');
-    const wechatLabelEl = document.getElementById('wechatLabel');
-    const emailLabelEl = document.getElementById('emailLabel');
-    const copyWechatBtn = document.getElementById('copyWechatBtn');
-    const copyEmailBtn = document.getElementById('copyEmailBtn');
-    const inquiryBtn = document.getElementById('inquiryBtn');
-    const noteEl = document.getElementById('noteText');
-    const langToggleBtn = document.getElementById('langToggle');
+        if (langToggleBtn) langToggleBtn.addEventListener('click', toggleLanguage);
+        updateLanguage(currentLang);
 
-    function updateLanguage(lang) {
-        const t = translations[lang];
-        if (!t) return;
-        taglineEl.innerHTML = t.tagline;
-        descEl.innerHTML = t.desc;
-        wechatLabelEl.innerText = t.wechatLabel;
-        emailLabelEl.innerText = t.emailLabel;
-        if (copyWechatBtn) copyWechatBtn.innerText = t.copyBtn;
-        if (copyEmailBtn) copyEmailBtn.innerText = t.copyBtn;
-        inquiryBtn.innerHTML = t.inquiry;
-        noteEl.innerText = t.note;
-        if (langToggleBtn) langToggleBtn.innerText = (lang === 'en' ? '中文' : 'English');
-        localStorage.setItem('domainname_lang', lang);
-        currentLang = lang;
-    }
+        // ============================================================
+        // 增强版深色模式切换 (修复无效果问题)
+        // ============================================================
+        const darkToggle = document.getElementById('darkModeToggle');
+        const bodyEl = document.body;
+        
+        // 获取有效的存储主题
+        const storedTheme = localStorage.getItem('domainname_theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    function toggleLanguage() {
-        const newLang = currentLang === 'en' ? 'zh' : 'en';
-        updateLanguage(newLang);
-        showToast(translations[newLang].toastLang);
-    }
+        // 显示toast消息（复用）
+        function showToast(msg) {
+            const toast = document.getElementById('toastMsg');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
 
-    if (langToggleBtn) langToggleBtn.addEventListener('click', toggleLanguage);
-    updateLanguage(currentLang);
+        // 核心：应用暗色/亮色模式，确保所有CSS变量和类生效
+        function applyTheme(isDark) {
+            if (isDark) {
+                bodyEl.classList.add('dark-mode');
+                if (darkToggle) darkToggle.checked = true;
+                localStorage.setItem('domainname_theme', 'dark');
+                // 给一个视觉反馈并且确保aria-label
+                console.log('🌙 Dark mode activated');
+                showToast(translations[currentLang]?.toastThemeDark || "Dark mode enabled");
+            } else {
+                bodyEl.classList.remove('dark-mode');
+                if (darkToggle) darkToggle.checked = false;
+                localStorage.setItem('domainname_theme', 'light');
+                console.log('☀️ Light mode activated');
+                showToast(translations[currentLang]?.toastThemeLight || "Light mode enabled");
+            }
+            // 强制浏览器重绘/重新计算样式 (在某些WebKit中确保动画生效，无副作用)
+            void document.body.offsetHeight;
+        }
 
-    // ============================================================
-    // 深色模式切换 (使用 dark-mode 类确保样式覆盖)
-    // ============================================================
-    const darkToggle = document.getElementById('darkModeToggle');
-    const bodyEl = document.body;
-
-    // 获取存储的主题或系统偏好
-    const storedTheme = localStorage.getItem('domainname_theme');
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    function applyTheme(isDark) {
-        if (isDark) {
-            bodyEl.classList.add('dark-mode');
-            if (darkToggle) darkToggle.checked = true;
-            localStorage.setItem('domainname_theme', 'dark');
-            showToast(translations[currentLang].toastThemeDark);
+        // 初始化主题
+        if (storedTheme === 'dark') {
+            applyTheme(true);
+        } else if (storedTheme === 'light') {
+            applyTheme(false);
         } else {
-            bodyEl.classList.remove('dark-mode');
-            if (darkToggle) darkToggle.checked = false;
-            localStorage.setItem('domainname_theme', 'light');
-            showToast(translations[currentLang].toastThemeLight);
+            // 无存储则跟随系统
+            applyTheme(systemPrefersDark);
         }
-    }
 
-    // 初始化
-    if (storedTheme === 'dark') {
-        applyTheme(true);
-    } else if (storedTheme === 'light') {
-        applyTheme(false);
-    } else {
-        applyTheme(systemDark);
-    }
-
-    // 事件监听
-    if (darkToggle) {
-        darkToggle.addEventListener('change', (e) => {
-            applyTheme(e.target.checked);
-        });
-    }
-
-    // 监听系统主题变化（仅当没有手动设置时）
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('domainname_theme')) {
-            applyTheme(e.matches);
+        // 监听开关变化 (click/change 双保险)
+        if (darkToggle) {
+            darkToggle.addEventListener('change', (e) => {
+                const isChecked = e.target.checked;
+                applyTheme(isChecked);
+            });
+            // 额外增加手动click安全处理（防止某些webkit bug）
+            darkToggle.addEventListener('click', (e) => {
+                // 确保状态一致性（以防change未触发）
+                if (darkToggle.checked !== bodyEl.classList.contains('dark-mode')) {
+                    applyTheme(darkToggle.checked);
+                }
+            });
         }
-    });
 
-    // ============================================================
-    // 复制功能
-    // ============================================================
-    const toastEl = document.getElementById('toastMsg');
-    let toastTimer = null;
-    function showToast(msg) {
-        if (!toastEl) return;
-        toastEl.textContent = msg;
-        toastEl.classList.add('show');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2000);
-    }
+        // 监听系统主题变化（仅当没有手动设置时）
+        const darkModeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleSystemChange = (e) => {
+            if (!localStorage.getItem('domainname_theme')) {
+                applyTheme(e.matches);
+            }
+        };
+        if (darkModeMedia.addEventListener) {
+            darkModeMedia.addEventListener('change', handleSystemChange);
+        } else {
+            darkModeMedia.addListener(handleSystemChange);
+        }
 
-    function copyToClipboard(text, successMsg) {
-        navigator.clipboard.writeText(text).then(() => {
-            showToast(successMsg);
-        }).catch(() => {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showToast(successMsg);
-        });
-    }
+        // ============================================================
+        // 复制功能实现
+        // ============================================================
+        async function copyToClipboard(text, successMsg) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast(successMsg);
+            } catch (err) {
+                // fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast(successMsg);
+            }
+        }
 
-    if (copyWechatBtn) {
-        copyWechatBtn.addEventListener('click', () => {
-            const wechatId = document.getElementById('wechatValue').innerText.trim();
-            copyToClipboard(wechatId, translations[currentLang].toastCopyWechat);
-        });
-    }
-    if (copyEmailBtn) {
-        copyEmailBtn.addEventListener('click', () => {
-            const email = document.getElementById('emailValue').innerText.trim();
-            copyToClipboard(email, translations[currentLang].toastCopyEmail);
-        });
-    }
+        if (copyWechatBtn) {
+            copyWechatBtn.addEventListener('click', () => {
+                const wechatIdElem = document.getElementById('wechatValue');
+                const wechatId = wechatIdElem ? wechatIdElem.innerText.trim() : 'domainname_plus';
+                copyToClipboard(wechatId, translations[currentLang].toastCopyWechat);
+            });
+        }
+        if (copyEmailBtn) {
+            copyEmailBtn.addEventListener('click', () => {
+                const emailElem = document.getElementById('emailValue');
+                const email = emailElem ? emailElem.innerText.trim() : 'hello@domainname.plus';
+                copyToClipboard(email, translations[currentLang].toastCopyEmail);
+            });
+        }
 
-    // Home 链接预留
-    const homeLink = document.getElementById('homeLink');
-    if (homeLink) {
-        homeLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            showToast(translations[currentLang].toastHome);
-        });
-    }
+        // Home 链接预留
+        const homeLink = document.getElementById('homeLink');
+        if (homeLink) {
+            homeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast(translations[currentLang].toastHome);
+            });
+        }
 
-    // 询价按钮提示
-    if (inquiryBtn) {
-        inquiryBtn.addEventListener('click', () => {
-            setTimeout(() => showToast(translations[currentLang].toastInquiry), 50);
-        });
-    }
+        // 询价按钮交互提醒
+        if (inquiryBtn) {
+            inquiryBtn.addEventListener('click', () => {
+                // 延迟一点点再弹toast避免和mailto冲突太急促
+                setTimeout(() => showToast(translations[currentLang].toastInquiry), 60);
+            });
+        }
+
+        // 额外修复 ios 导航栏问题，保证卡片视图完整
+        const adjustPadding = () => {
+            const navHeight = document.querySelector('.navbar')?.offsetHeight || 70;
+            const container = document.querySelector('.container-index');
+            if (container) container.style.paddingTop = `${navHeight + 20}px`;
+        };
+        window.addEventListener('resize', adjustPadding);
+        setTimeout(adjustPadding, 100);
+    })();
 </script>
 </body>
 </html>
