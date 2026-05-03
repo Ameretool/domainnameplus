@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -99,7 +98,6 @@
             bottom: -150px;
             transition: background 0.3s ease;
         }
-        /* 让动画小球在暗色模式下稍微改变颜色 */
         body.dark-mode .circles li {
             background: var(--circle-color-light);
         }
@@ -148,16 +146,17 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
+        /* 重点改造：确保 SVG 原色渐变完美显示，不受暗黑模式滤镜影响 */
         .logo-img {
             width: auto;
-            height: 28px;
-            filter: brightness(0) invert(1);
-            transition: filter 0.2s;
+            height: 36px;
+            filter: none !important;
+            display: block;
         }
         .logo-text {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 700;
             letter-spacing: -0.3px;
             color: #fff;
@@ -191,7 +190,7 @@
             background: var(--accent);
             border-color: transparent;
         }
-        /* 黑暗模式切换开关 - 增强样式 */
+        /* 暗黑模式切换开关 - 保持原有交互但更美观 */
         .switch-container {
             position: relative;
             display: inline-flex;
@@ -235,16 +234,11 @@
             transition: transform 0.35s ease, background 0.2s;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
-        /* 暗黑模式下修改滑块图标和位置 */
         .switch-container input:checked + .slider:before {
             transform: translateX(1.3rem);
             content: "🌙";
             background-color: #1e293b;
             color: #ffd966;
-        }
-        /* 增加活跃反馈 */
-        .switch-container:active .slider:before {
-            scale: 0.95;
         }
 
         /* ========== 主内容区 ========== */
@@ -455,10 +449,11 @@
             .nav-left { gap: 1rem; }
             .logo-text { font-size: 1rem; }
             .navbar-brand { flex-wrap: wrap; gap: 8px; }
+            .logo-img { height: 30px; }
         }
         @media (max-width: 480px) {
             .navbar-brand { max-width: 100%; padding: 0; }
-            .logo-img { height: 22px; }
+            .logo-img { height: 28px; }
             .logo-text { font-size: 0.85rem; }
             .nav-home { font-size: 0.8rem; padding: 2px 8px; }
             .toast-msg { white-space: normal; bottom: 75px; font-size: 0.75rem; }
@@ -480,7 +475,11 @@
     <div class="navbar-brand">
         <div class="nav-left">
             <div class="logo">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E" alt="domainname.plus" class="logo-img">
+                <!-- 全新的精美 SVG Logo：融合 P+ 与科技网络节点，渐变色青紫风格 -->
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='25' cy='25' r='22' fill='none' stroke='url(%23grad)' stroke-width='2' opacity='0.3'/%3E%3Cpath d='M 12.5 12 L 12.5 38' fill='none' stroke='url(%23grad)' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M 12.5 12 L 24.5 12 C 34.5 12, 34.5 34, 24.5 34 L 12.5 34' fill='none' stroke='url(%23grad)' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M 31.5 20 V 30 M 26.5 25 H 36.5' fill='none' stroke='url(%23grad)' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='18.5' cy='23' r='2.5' fill='url(%23grad)'/%3E%3Ccircle cx='6' cy='12' r='1.5' fill='url(%23grad)' opacity='0.6'/%3E%3Ccircle cx='44' cy='38' r='1.5' fill='url(%23grad)' opacity='0.6'/%3E%3Ccircle cx='44' cy='12' r='1.5' fill='url(%23grad)' opacity='0.6'/%3E%3Ccircle cx='6' cy='38' r='1.5' fill='url(%23grad)' opacity='0.6'/%3E%3Ccircle cx='12.5' cy='44' r='1.5' fill='url(%23grad)' opacity='0.6'/%3E%3Ccircle cx='37.5' cy='44' r='1.5' fill='url(%23grad)' opacity='0.6'/%3E%3C/svg%3E"
+                     alt="domainname.plus logo"
+                     class="logo-img"
+                     style="filter: none !important;">
                 <span class="logo-text">domainname.plus</span>
             </div>
             <a href="#" class="nav-home" id="homeLink">Home</a>
@@ -571,7 +570,6 @@
 
         let currentLang = localStorage.getItem('domainname_lang') || 'en';
 
-        // DOM 元素绑定
         const taglineEl = document.getElementById('taglineText');
         const descEl = document.getElementById('descText');
         const wechatLabelEl = document.getElementById('wechatLabel');
@@ -607,17 +605,7 @@
         if (langToggleBtn) langToggleBtn.addEventListener('click', toggleLanguage);
         updateLanguage(currentLang);
 
-        // ============================================================
-        // 增强版深色模式切换 (修复无效果问题)
-        // ============================================================
-        const darkToggle = document.getElementById('darkModeToggle');
-        const bodyEl = document.body;
-        
-        // 获取有效的存储主题
-        const storedTheme = localStorage.getItem('domainname_theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        // 显示toast消息（复用）
+        // Toast 通知组件
         function showToast(msg) {
             const toast = document.getElementById('toastMsg');
             if (!toast) return;
@@ -627,73 +615,55 @@
             window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
         }
 
-        // 核心：应用暗色/亮色模式，确保所有CSS变量和类生效
+        // ============================================================
+        // 深色模式修复：确保切换流畅生效
+        // ============================================================
+        const darkToggle = document.getElementById('darkModeToggle');
+        const bodyEl = document.body;
+        const storedTheme = localStorage.getItem('domainname_theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
         function applyTheme(isDark) {
             if (isDark) {
                 bodyEl.classList.add('dark-mode');
                 if (darkToggle) darkToggle.checked = true;
                 localStorage.setItem('domainname_theme', 'dark');
-                // 给一个视觉反馈并且确保aria-label
-                console.log('🌙 Dark mode activated');
                 showToast(translations[currentLang]?.toastThemeDark || "Dark mode enabled");
             } else {
                 bodyEl.classList.remove('dark-mode');
                 if (darkToggle) darkToggle.checked = false;
                 localStorage.setItem('domainname_theme', 'light');
-                console.log('☀️ Light mode activated');
                 showToast(translations[currentLang]?.toastThemeLight || "Light mode enabled");
             }
-            // 强制浏览器重绘/重新计算样式 (在某些WebKit中确保动画生效，无副作用)
-            void document.body.offsetHeight;
+            void document.body.offsetHeight; // 强制重绘
         }
 
-        // 初始化主题
-        if (storedTheme === 'dark') {
-            applyTheme(true);
-        } else if (storedTheme === 'light') {
-            applyTheme(false);
-        } else {
-            // 无存储则跟随系统
-            applyTheme(systemPrefersDark);
-        }
+        if (storedTheme === 'dark') applyTheme(true);
+        else if (storedTheme === 'light') applyTheme(false);
+        else applyTheme(systemPrefersDark);
 
-        // 监听开关变化 (click/change 双保险)
         if (darkToggle) {
-            darkToggle.addEventListener('change', (e) => {
-                const isChecked = e.target.checked;
-                applyTheme(isChecked);
-            });
-            // 额外增加手动click安全处理（防止某些webkit bug）
+            darkToggle.addEventListener('change', (e) => applyTheme(e.target.checked));
             darkToggle.addEventListener('click', (e) => {
-                // 确保状态一致性（以防change未触发）
                 if (darkToggle.checked !== bodyEl.classList.contains('dark-mode')) {
                     applyTheme(darkToggle.checked);
                 }
             });
         }
 
-        // 监听系统主题变化（仅当没有手动设置时）
         const darkModeMedia = window.matchMedia('(prefers-color-scheme: dark)');
         const handleSystemChange = (e) => {
-            if (!localStorage.getItem('domainname_theme')) {
-                applyTheme(e.matches);
-            }
+            if (!localStorage.getItem('domainname_theme')) applyTheme(e.matches);
         };
-        if (darkModeMedia.addEventListener) {
-            darkModeMedia.addEventListener('change', handleSystemChange);
-        } else {
-            darkModeMedia.addListener(handleSystemChange);
-        }
+        if (darkModeMedia.addEventListener) darkModeMedia.addEventListener('change', handleSystemChange);
+        else darkModeMedia.addListener(handleSystemChange);
 
-        // ============================================================
-        // 复制功能实现
-        // ============================================================
+        // 复制功能
         async function copyToClipboard(text, successMsg) {
             try {
                 await navigator.clipboard.writeText(text);
                 showToast(successMsg);
             } catch (err) {
-                // fallback
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
                 document.body.appendChild(textarea);
@@ -706,8 +676,8 @@
 
         if (copyWechatBtn) {
             copyWechatBtn.addEventListener('click', () => {
-                const wechatIdElem = document.getElementById('wechatValue');
-                const wechatId = wechatIdElem ? wechatIdElem.innerText.trim() : 'domainname_plus';
+                const wechatElem = document.getElementById('wechatValue');
+                const wechatId = wechatElem ? wechatElem.innerText.trim() : 'domainname_plus';
                 copyToClipboard(wechatId, translations[currentLang].toastCopyWechat);
             });
         }
@@ -719,31 +689,17 @@
             });
         }
 
-        // Home 链接预留
         const homeLink = document.getElementById('homeLink');
-        if (homeLink) {
-            homeLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                showToast(translations[currentLang].toastHome);
-            });
-        }
+        if (homeLink) homeLink.addEventListener('click', (e) => { e.preventDefault(); showToast(translations[currentLang].toastHome); });
+        if (inquiryBtn) inquiryBtn.addEventListener('click', () => setTimeout(() => showToast(translations[currentLang].toastInquiry), 60));
 
-        // 询价按钮交互提醒
-        if (inquiryBtn) {
-            inquiryBtn.addEventListener('click', () => {
-                // 延迟一点点再弹toast避免和mailto冲突太急促
-                setTimeout(() => showToast(translations[currentLang].toastInquiry), 60);
-            });
-        }
-
-        // 额外修复 ios 导航栏问题，保证卡片视图完整
-        const adjustPadding = () => {
+        const adjustNavPadding = () => {
             const navHeight = document.querySelector('.navbar')?.offsetHeight || 70;
             const container = document.querySelector('.container-index');
             if (container) container.style.paddingTop = `${navHeight + 20}px`;
         };
-        window.addEventListener('resize', adjustPadding);
-        setTimeout(adjustPadding, 100);
+        window.addEventListener('resize', adjustNavPadding);
+        setTimeout(adjustNavPadding, 100);
     })();
 </script>
 </body>
