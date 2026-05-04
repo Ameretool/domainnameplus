@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>页面已迁移</title>
+    <script>
+        // 获取完整的请求路径
+        var path = window.location.pathname;
+        // 构造跳转目标 URL，动态拼接请求路径，并保留查询参数
+        var target = 'https://gb.ooo' + path + window.location.search;
+        // 让浏览器跳转过去
+        window.location.href = target;
+    </script>
+</head>
+<body>
+    <p>页面已迁移，正在为您跳转到新地址，请稍候...</p>
+    <noscript><meta http-equiv="refresh" content="0; url=https://gb.ooo"></noscript>
+</body>
+</html>
