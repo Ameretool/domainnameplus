@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Hello#DomainName.Plus · 星际联络站</title>
+    <title>Hello#DomainName.Plus · 纯透明界面</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +20,7 @@
             color: #eef5ff;
         }
 
-        /* ========= 纯 CSS 动态背景（多层科幻感动画） ========= */
+        /* ========= 纯 CSS 动态背景（深邃星空+极光+网格+光环） ========= */
         .bg-universe {
             position: fixed;
             top: 0;
@@ -32,7 +32,6 @@
             pointer-events: none;
         }
 
-        /* 1. 流动的极光云雾 */
         .aurora {
             position: absolute;
             width: 180%;
@@ -50,7 +49,6 @@
             100% { transform: translate(6%, 4%) rotate(3deg) scale(1.2); opacity: 1; }
         }
 
-        /* 2. 动态网格 (科技感扫描) */
         .grid-overlay {
             position: absolute;
             width: 100%;
@@ -67,7 +65,6 @@
             100% { background-position: 60px 60px; }
         }
 
-        /* 3. 旋转的几何光环 */
         .geo-ring {
             position: absolute;
             top: 50%;
@@ -106,7 +103,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* 4. 漂浮能量球 */
         .energy-orb {
             position: absolute;
             border-radius: 50%;
@@ -124,7 +120,6 @@
             100% { transform: translate(30px, -40px) scale(1.3); opacity: 0.7; }
         }
 
-        /* 5. 星光粒子流 */
         .star-stream {
             position: absolute;
             width: 100%;
@@ -144,7 +139,6 @@
             100% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* 随机生成星星位置 */
         .star:nth-child(1) { top: 15%; left: 8%; width: 2px; height: 2px; animation-duration: 2.5s; }
         .star:nth-child(2) { top: 65%; left: 85%; width: 3px; height: 3px; animation-duration: 3s; }
         .star:nth-child(3) { top: 40%; left: 92%; width: 1.5px; height: 1.5px; animation-duration: 1.8s; }
@@ -156,7 +150,7 @@
         .star:nth-child(9) { top: 70%; left: 35%; width: 2.2px; height: 2.2px; animation-duration: 2.7s; }
         .star:nth-child(10) { top: 30%; left: 15%; width: 1.5px; height: 1.5px; animation-duration: 3.1s; }
 
-        /* ========= 主内容区（无卡片硬边，高级玻璃态） ========= */
+        /* ========= 主内容区 —— 完全透明，无任何卡片样式 ========= */
         .content {
             position: relative;
             z-index: 20;
@@ -167,19 +161,20 @@
             padding: 2rem;
         }
 
-        .glass-panel {
+        /* 无背景、无模糊、无边框、无阴影的纯文本容器 */
+        .transparent-container {
             max-width: 820px;
             width: 100%;
-            background: rgba(15, 25, 45, 0.55);
-            backdrop-filter: blur(16px);
-            border-radius: 3.5rem;
-            padding: 2.5rem 2rem;
-            border: 1px solid rgba(0, 200, 255, 0.25);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
-            transition: all 0.3s;
+            text-align: center;
+            /* 完全透明，不设任何背景、边框、阴影 */
+            background: transparent;
+            backdrop-filter: none;
+            border: none;
+            box-shadow: none;
+            padding: 0.5rem;
         }
 
-        /* 语言切换 */
+        /* 语言切换按钮（半透明浮动感，但不作为卡片） */
         .lang-bar {
             display: flex;
             justify-content: flex-end;
@@ -188,8 +183,8 @@
         }
 
         .lang-btn {
-            background: rgba(0, 200, 255, 0.15);
-            border: 1px solid rgba(0, 200, 255, 0.4);
+            background: rgba(0, 200, 255, 0.2);
+            border: 1px solid rgba(0, 200, 255, 0.5);
             padding: 0.3rem 1.2rem;
             border-radius: 60px;
             font-size: 0.8rem;
@@ -232,6 +227,7 @@
             font-weight: 400;
             color: #7bb3ff;
             margin-bottom: 0.5rem;
+            text-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
 
         .email-address {
@@ -246,12 +242,13 @@
             display: inline-block;
             padding: 0.2rem 0.5rem;
             word-break: break-word;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .email-hint {
             font-size: 0.75rem;
             color: #8bb5e0;
-            background: rgba(0, 100, 150, 0.3);
+            background: rgba(0, 100, 150, 0.25);
             display: inline-block;
             padding: 0.2rem 1.2rem;
             border-radius: 60px;
@@ -266,8 +263,8 @@
         }
 
         .copy-action {
-            background: rgba(0, 200, 255, 0.12);
-            border: 1px solid rgba(0, 200, 255, 0.5);
+            background: rgba(0, 200, 255, 0.15);
+            border: 1px solid rgba(0, 200, 255, 0.6);
             padding: 0.7rem 2rem;
             border-radius: 60px;
             font-size: 0.9rem;
@@ -308,6 +305,7 @@
         .speed-stats span:first-child {
             font-weight: 500;
             color: #9bc0ff;
+            text-shadow: 0 0 4px rgba(0,0,0,0.3);
         }
 
         .speed-number {
@@ -362,6 +360,7 @@
             font-size: 0.7rem;
             color: #6f96c0;
             letter-spacing: 1px;
+            text-shadow: 0 0 4px rgba(0,0,0,0.3);
         }
 
         /* Toast 通知 */
@@ -393,7 +392,6 @@
         @media (max-width: 580px) {
             .email-address { font-size: 1.7rem; }
             .speed-number { font-size: 1.8rem; }
-            .glass-panel { padding: 1.5rem; }
             .orb1, .orb2, .orb3 { display: none; }
         }
     </style>
@@ -418,7 +416,8 @@
 </div>
 
 <div class="content">
-    <div class="glass-panel">
+    <!-- 完全透明容器，无任何卡片样式 -->
+    <div class="transparent-container">
         <div class="lang-bar">
             <button class="lang-btn active" data-lang="en">🌌 EN</button>
             <button class="lang-btn" data-lang="zh">🌠 中文</button>
@@ -462,7 +461,6 @@
         const REAL_EMAIL = "hello@domainname.plus";
         const DISPLAY_EMAIL = "Hello#DomainName.Plus";
 
-        // 多语言词库 (科幻风格)
         const texts = {
             en: {
                 emailLabel: "✦ INTERSTELLAR CONTACT ✦",
@@ -491,7 +489,6 @@
         let currentLang = 'en';
         let loadTimeMs = null;
 
-        // DOM 元素
         const emailLabelEl = document.getElementById('emailLabel');
         const emailHintEl = document.getElementById('emailHint');
         const copyBtnSpan = document.getElementById('copyBtnText');
@@ -506,12 +503,10 @@
 
         if (emailDisplaySpan) emailDisplaySpan.innerText = DISPLAY_EMAIL;
 
-        // 精准测速 (完全加载完成时间)
         function measureLoadSpeed() {
             const start = performance.now();
             const finish = () => {
                 let total = Math.max(0, Math.round(performance.now() - start));
-                // 使用 Navigation Timing API 修正
                 if (performance.getEntriesByType && performance.getEntriesByType('navigation').length) {
                     const nav = performance.getEntriesByType('navigation')[0];
                     if (nav && nav.loadEventEnd) {
@@ -526,7 +521,6 @@
                 finish();
             } else {
                 window.addEventListener('load', finish);
-                // 展示初步近似值
                 document.addEventListener('DOMContentLoaded', () => {
                     if (loadTimeMs === null) {
                         speedValueSpan.textContent = Math.round(performance.now() - start);
@@ -535,7 +529,6 @@
             }
         }
 
-        // 复制真实邮箱
         function copyRealEmail() {
             if (!navigator.clipboard) {
                 fallbackCopy();
@@ -579,7 +572,6 @@
             setTimeout(() => toastEl.classList.remove('show'), 2200);
         }
 
-        // 语言切换
         function setLanguage(lang) {
             currentLang = lang;
             const t = texts[lang];
@@ -590,19 +582,16 @@
             speedUnitEl.textContent = (lang === 'en') ? 'ms' : '毫秒';
             speedNoteEl.textContent = t.speedNote;
             footerNoteEl.textContent = t.footerNote;
-            // 更新按钮active样式
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
                 else btn.classList.remove('active');
             });
-            // 更新邮箱双击提示语言
             const displayDiv = document.getElementById('emailDisplay');
             if (displayDiv) {
                 displayDiv.setAttribute('title', lang === 'en' ? 'Double-click to copy real email' : '双击复制真实邮箱');
             }
         }
 
-        // 双击邮箱复制
         function bindDoubleClickCopy() {
             const displayDiv = document.getElementById('emailDisplay');
             if (displayDiv) {
@@ -616,7 +605,6 @@
             }
         }
 
-        // 事件绑定
         function bindEvents() {
             if (copyButton) {
                 copyButton.addEventListener('click', (e) => {
