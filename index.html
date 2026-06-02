@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Hello#DomainName.Plus · 联系页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 背景色：用户指定的 #DCE2F1 (淡蓝灰，护眼干净) */
+        body {
+            min-height: 100vh;
+            background: #DCE2F1;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Canvas 动画叠加层 (流动光晕，增强视觉) */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 内容容器 - 轻微磨砂玻璃效果，提升可读性 */
+        .content {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .main-container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(10px);
+            border-radius: 3rem;
+            padding: 2rem 2rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(100, 120, 150, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 语言切换 */
+        .lang-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .lang-btn {
+            background: rgba(180, 200, 220, 0.7);
+            border: none;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #2c4f6e;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(70, 100, 130, 0.4);
+        }
+
+        .lang-btn.active {
+            background: #4a7a9e;
+            color: white;
+            border-color: #4a7a9e;
+            box-shadow: 0 2px 8px rgba(74,122,158,0.2);
+        }
+
+        .lang-btn:hover {
+            background: #6b94b3;
+            color: white;
+        }
+
+        /* 邮箱区域 - 轻微浮动动画 */
+        .email-wrapper {
+            margin: 1rem 0 0.5rem;
+            animation: gentleFloat 3.2s infinite ease-in-out;
+        }
+
+        @keyframes gentleFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .email-label {
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            font-weight: 500;
+            color: #3b6c8c;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        /* 防机器人邮箱显示：用 # 代替 @ */
+        .email-display {
+            font-size: 2.6rem;
+            font-weight: 700;
+            word-break: break-word;
+            background: linear-gradient(135deg, #1f5777, #347b9f, #26648a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            letter-spacing: -0.3px;
+        }
+
+        .email-note {
+            font-size: 0.75rem;
+            color: #547d9c;
+            margin-top: 0.3rem;
+            background: rgba(200, 220, 240, 0.5);
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 复制按钮 */
+        .copy-action {
+            margin: 1.2rem 0 1.8rem;
+        }
+
+        .copy-btn {
+            background: rgba(74, 122, 158, 0.12);
+            border: 1px solid rgba(74, 122, 158, 0.5);
+            padding: 0.6rem 1.8rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2c5c7e;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        .copy-btn:hover {
+            background: #4a7a9e30;
+            border-color: #4a7a9e;
+            transform: scale(1.02);
+            color: #1b4460;
+        }
+
+        /* 速度区域 */
+        .speed-section {
+            margin: 0.8rem auto 0.5rem;
+            max-width: 380px;
+            border-top: 1px dashed rgba(74, 122, 158, 0.4);
+            padding-top: 1.3rem;
+        }
+
+        .speed-panel {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 1rem;
+        }
+
+        .speed-label {
+            font-weight: 500;
+            color: #3b6c8c;
+        }
+
+        .speed-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            font-family: monospace;
+            color: #1f5777;
+            line-height: 1;
+        }
+
+        .speed-unit {
+            font-size: 0.9rem;
+            color: #6085a3;
+        }
+
+        .speed-note {
+            font-size: 0.7rem;
+            color: #7b9bb5;
+            margin-top: 0.5rem;
+        }
+
+        /* 装饰加载条 */
+        .load-bar {
+            width: 160px;
+            height: 2px;
+            background: rgba(74, 122, 158, 0.25);
+            border-radius: 4px;
+            margin: 0.8rem auto 0;
+            overflow: hidden;
+        }
+
+        .load-bar span {
+            display: block;
+            height: 100%;
+            width: 40%;
+            background: linear-gradient(90deg, #6c96b5, #3e6f92);
+            animation: loadingMove 1.8s infinite alternate;
+        }
+
+        @keyframes loadingMove {
+            0% { transform: translateX(0); width: 20%; }
+            100% { transform: translateX(100px); width: 55%; }
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #7b9bb5;
+        }
+
+        /* Toast 提示 */
+        .toast-pop {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #eef3fcee;
+            backdrop-filter: blur(12px);
+            color: #2c5c7e;
+            padding: 8px 22px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #9bb9d1;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+            font-family: monospace;
+        }
+
+        .toast-pop.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        @media (max-width: 580px) {
+            .email-display { font-size: 1.7rem; }
+            .speed-value { font-size: 1.8rem; }
+            .main-container { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Canvas 背景动画：流动光晕 + 柔和波浪，叠加在 #DCE2F1 上 -->
+<canvas id="bgCanvas"></canvas>
+
+<div class="content">
+    <div class="main-container">
+        <div class="lang-row">
+            <button class="lang-btn active" data-lang="en">ENGLISH</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+        </div>
+
+        <div class="email-wrapper">
+            <div class="email-label" id="emailLabel">CONTACT</div>
+            <div>
+                <!-- 显示带 # 的防机器人邮箱 -->
+                <span class="email-display" id="emailDisplay">Hello#DomainName.Plus</span>
+            </div>
+            <div class="email-note" id="emailNote">(replace '#' with '@' to send email)</div>
+            <div class="copy-action">
+                <div class="copy-btn" id="copyBtn">
+                    <span>📋</span> <span id="copyBtnText">Copy real email</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="speed-section">
+            <div class="speed-panel">
+                <span class="speed-label" id="speedLabel">Page load time</span>
+                <span class="speed-value" id="speedValue">—</span>
+                <span class="speed-unit" id="speedUnit">ms</span>
+            </div>
+            <div class="speed-note" id="speedNote">(real navigation speed)</div>
+            <div class="load-bar"><span></span></div>
+        </div>
+
+        <div class="footer-note" id="footerNote">
+            ✨ soft blue-gray background · flowing light ✨
+        </div>
+    </div>
+</div>
+
+<div id="toastMessage" class="toast-pop">✔️ Copied</div>
+
+<script>
+    // ======================= 1. 背景动画：流动光晕 + 波浪，适配 #DCE2F1 =======================
+    (function() {
+        const canvas = document.getElementById('bgCanvas');
+        let ctx = canvas.getContext('2d');
+        let width, height;
+        let time = 0;
+        let animationId = null;
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        // 绘制大型流动光晕 (圆形渐变，融入背景)
+        function drawBlob(x, y, radius, color) {
+            const grad = ctx.createRadialGradient(x, y, radius * 0.2, x, y, radius);
+            grad.addColorStop(0, color);
+            grad.addColorStop(1, 'rgba(220, 226, 241, 0)'); // 与 body 背景色 #DCE2F1 融合
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fillStyle = grad;
+            ctx.fill();
+        }
+
+        // 绘制流动的波浪线 (增加灵动感)
+        function drawFlowWaves(t) {
+            ctx.save();
+            ctx.globalCompositeOperation = 'lighter';
+            for (let i = 0; i < 2; i++) {
+                ctx.beginPath();
+                let amplitude = 18 + Math.sin(t * 0.5 + i) * 5;
+                let freq = 0.006 + i * 0.001;
+                let yOffset = height * (0.4 + i * 0.25);
+                for (let x = 0; x <= width; x += 25) {
+                    let y = yOffset + Math.sin(x * freq + t * 1.3 + i) * amplitude;
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.strokeStyle = `rgba(100, 130, 170, 0.25)`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
+
+        function animateBackground() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, width, height);
+            
+            // 动态光晕 - 移动的柔和色块
+            const cx = width / 2;
+            const cy = height / 2;
+            // 光晕1 左上
+            let x1 = width * 0.2 + Math.sin(time * 0.4) * width * 0.1;
+            let y1 = height * 0.3 + Math.cos(time * 0.5) * height * 0.08;
+            drawBlob(x1, y1, width * 0.45, 'rgba(140, 170, 200, 0.2)');
+            // 光晕2 右下
+            let x2 = width * 0.75 + Math.cos(time * 0.6) * width * 0.12;
+            let y2 = height * 0.7 + Math.sin(time * 0.7) * height * 0.1;
+            drawBlob(x2, y2, width * 0.4, 'rgba(110, 150, 185, 0.2)');
+            // 光晕3 中心淡蓝
+            let x3 = cx + Math.sin(time * 0.3) * 50;
+            let y3 = cy + Math.cos(time * 0.4) * 40;
+            drawBlob(x3, y3, width * 0.35, 'rgba(160, 190, 220, 0.25)');
+            
+            // 流动波浪
+            drawFlowWaves(time);
+            
+            time += 0.016;
+            animationId = requestAnimationFrame(animateBackground);
+        }
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
+        
+        resizeCanvas();
+        animateBackground();
+    })();
+
+    // ======================= 2. 业务逻辑：中英文切换、速度测量、复制邮箱（转换 # 为 @） =======================
+    (function() {
+        // 真实邮箱地址 (防机器人显示时用 #，但复制和提示都使用正确格式)
+        const REAL_EMAIL = "hello@domainname.plus";
+        const DISPLAY_EMAIL = "Hello#DomainName.Plus";
+        
+        const translations = {
+            en: {
+                emailLabel: "CONTACT",
+                emailNote: "(replace '#' with '@' to send email)",
+                copyBtnText: "Copy real email",
+                speedLabel: "Page load time",
+                speedUnit: "ms",
+                speedNote: "(real navigation speed)",
+                footerNote: "✨ soft blue-gray background · flowing light ✨",
+                copySuccess: "✔️ Email copied!",
+                copyFallback: "⚠️ Manual copy: hello@domainname.plus"
+            },
+            zh: {
+                emailLabel: "联系邮箱",
+                emailNote: "(将 # 替换为 @ 即可发信)",
+                copyBtnText: "复制真实邮箱",
+                speedLabel: "页面加载速度",
+                speedUnit: "毫秒",
+                speedNote: "(真实访问耗时)",
+                footerNote: "✨ 淡蓝灰护眼底色 · 灵动光晕 ✨",
+                copySuccess: "✔️ 邮箱已复制",
+                copyFallback: "⚠️ 手动复制: hello@domainname.plus"
+            }
+        };
+
+        let currentLang = 'en';
+        let loadTimeMs = null;
+
+        // DOM 元素
+        const emailLabelEl = document.getElementById('emailLabel');
+        const emailNoteEl = document.getElementById('emailNote');
+        const copyBtnTextSpan = document.getElementById('copyBtnText');
+        const speedLabelEl = document.getElementById('speedLabel');
+        const speedUnitEl = document.getElementById('speedUnit');
+        const speedNoteEl = document.getElementById('speedNote');
+        const footerNoteEl = document.getElementById('footerNote');
+        const speedValueSpan = document.getElementById('speedValue');
+        const copyButton = document.getElementById('copyBtn');
+        const toastEl = document.getElementById('toastMessage');
+        const emailDisplaySpan = document.getElementById('emailDisplay');
+        
+        // 设置显示的邮箱文本 (固定为防机器人格式)
+        if (emailDisplaySpan) emailDisplaySpan.innerText = DISPLAY_EMAIL;
+
+        // 测速 (真实页面加载耗时)
+        function measureLoadTime() {
+            const start = performance.now();
+            const finalize = () => {
+                let total = Math.max(0, Math.round(performance.now() - start));
+                // 使用 Navigation Timing API 校准
+                if (performance.getEntriesByType && performance.getEntriesByType('navigation').length) {
+                    const nav = performance.getEntriesByType('navigation')[0];
+                    if (nav && nav.loadEventEnd) {
+                        const navTime = Math.round(nav.loadEventEnd - nav.startTime);
+                        if (navTime > 0 && navTime < 10000) total = navTime;
+                    }
+                }
+                loadTimeMs = total;
+                speedValueSpan.textContent = loadTimeMs;
+            };
+            if (document.readyState === 'complete') {
+                finalize();
+            } else {
+                window.addEventListener('load', finalize);
+                document.addEventListener('DOMContentLoaded', () => {
+                    if (loadTimeMs === null) {
+                        speedValueSpan.textContent = Math.round(performance.now() - start);
+                    }
+                });
+            }
+        }
+
+        // 复制正确的邮箱地址 (hello@domainname.plus)
+        function copyRealEmail() {
+            const emailToCopy = REAL_EMAIL;
+            if (!navigator.clipboard) {
+                fallbackCopy(emailToCopy);
+                return;
+            }
+            navigator.clipboard.writeText(emailToCopy).then(() => {
+                const msg = currentLang === 'en' ? translations.en.copySuccess : translations.zh.copySuccess;
+                showToast(msg);
+                animateCopyButton();
+            }).catch(() => fallbackCopy(emailToCopy));
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.top = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            let success = false;
+            try { success = document.execCommand('copy'); } catch(e) {}
+            document.body.removeChild(textarea);
+            if (success) {
+                const msg = currentLang === 'en' ? translations.en.copySuccess : translations.zh.copySuccess;
+                showToast(msg);
+            } else {
+                const fallbackMsg = currentLang === 'en' ? translations.en.copyFallback : translations.zh.copyFallback;
+                showToast(fallbackMsg);
+            }
+            animateCopyButton();
+        }
+
+        function animateCopyButton() {
+            if (copyButton) {
+                copyButton.style.transform = 'scale(0.96)';
+                setTimeout(() => { copyButton.style.transform = ''; }, 150);
+            }
+        }
+
+        function showToast(msg) {
+            if (!toastEl) return;
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            setTimeout(() => {
+                toastEl.classList.remove('show');
+            }, 2000);
+        }
+
+        // 切换语言
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            emailLabelEl.textContent = t.emailLabel;
+            emailNoteEl.textContent = t.emailNote;
+            copyBtnTextSpan.textContent = t.copyBtnText;
+            speedLabelEl.textContent = t.speedLabel;
+            speedUnitEl.textContent = (lang === 'en') ? 'ms' : '毫秒';
+            speedNoteEl.textContent = t.speedNote;
+            footerNoteEl.textContent = t.footerNote;
+            
+            // 更新按钮激活样式
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+        }
+
+        // 双击邮箱显示区域也可以复制真实邮箱
+        function bindEmailDoubleClick() {
+            const emailDisplayDiv = document.getElementById('emailDisplay');
+            if (emailDisplayDiv) {
+                emailDisplayDiv.style.cursor = 'pointer';
+                emailDisplayDiv.addEventListener('dblclick', (e) => {
+                    e.preventDefault();
+                    copyRealEmail();
+                    emailDisplayDiv.style.transform = 'scale(0.98)';
+                    setTimeout(() => { emailDisplayDiv.style.transform = ''; }, 120);
+                });
+                emailDisplayDiv.setAttribute('title', currentLang === 'en' ? 'Double-click to copy real email' : '双击复制真实邮箱');
+            }
+        }
+
+        function bindEvents() {
+            if (copyButton) {
+                copyButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    copyRealEmail();
+                });
+            }
+            const langBtns = document.querySelectorAll('.lang-btn');
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.getAttribute('data-lang');
+                    if (lang === 'en' || lang === 'zh') setLanguage(lang);
+                });
+            });
+            bindEmailDoubleClick();
+        }
+
+        measureLoadTime();
+        setLanguage('en');
+        bindEvents();
+    })();
+</script>
+</body>
+</html>
