@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Hello#DomainName.Plus · 纯透明星际界面 | gb.ooo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 30% 40%, #0a0f2a, #03050b);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'SF Pro Text', 'Poppins', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+            color: #eef5ff;
+        }
+
+        /* ========= 纯 CSS 动态背景（深邃星空+极光+光环+能量球，无网格方块） ========= */
+        .bg-universe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .aurora {
+            position: absolute;
+            width: 180%;
+            height: 180%;
+            top: -40%;
+            left: -40%;
+            background: radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.15), rgba(100, 0, 255, 0.1), transparent 70%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 80, 200, 0.12), rgba(0, 150, 200, 0.08), transparent 65%);
+            filter: blur(60px);
+            animation: driftAurora 22s infinite alternate ease-in-out;
+        }
+
+        @keyframes driftAurora {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.6; }
+            100% { transform: translate(6%, 4%) rotate(3deg) scale(1.2); opacity: 1; }
+        }
+
+        /* 网格方块相关样式已完全移除 —— 背景不再有任何方块/网格 */
+
+        .geo-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            margin-left: -250px;
+            margin-top: -250px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+            animation: spinRing 25s infinite linear;
+        }
+
+        .geo-ring:nth-child(2) {
+            width: 700px;
+            height: 700px;
+            margin-left: -350px;
+            margin-top: -350px;
+            border: 1px solid rgba(255, 100, 200, 0.25);
+            animation-duration: 35s;
+            animation-direction: reverse;
+        }
+
+        .geo-ring:nth-child(3) {
+            width: 900px;
+            height: 900px;
+            margin-left: -450px;
+            margin-top: -450px;
+            border: 2px dashed rgba(100, 200, 255, 0.2);
+            animation-duration: 45s;
+        }
+
+        @keyframes spinRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .energy-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 200, 255, 0.4), rgba(0, 100, 255, 0.1));
+            filter: blur(15px);
+            animation: floatOrb 14s infinite alternate ease-in-out;
+        }
+
+        .orb1 { width: 180px; height: 180px; bottom: 5%; left: -60px; animation-duration: 18s; }
+        .orb2 { width: 240px; height: 240px; top: 10%; right: -80px; animation-duration: 22s; animation-delay: 2s; }
+        .orb3 { width: 140px; height: 140px; bottom: 25%; right: 15%; animation-duration: 16s; animation-delay: 1s; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            100% { transform: translate(30px, -40px) scale(1.3); opacity: 0.7; }
+        }
+
+        .star-stream {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: twinkleStar 3s infinite alternate;
+        }
+
+        @keyframes twinkleStar {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .star:nth-child(1) { top: 15%; left: 8%; width: 2px; height: 2px; animation-duration: 2.5s; }
+        .star:nth-child(2) { top: 65%; left: 85%; width: 3px; height: 3px; animation-duration: 3s; }
+        .star:nth-child(3) { top: 40%; left: 92%; width: 1.5px; height: 1.5px; animation-duration: 1.8s; }
+        .star:nth-child(4) { top: 80%; left: 12%; width: 2.5px; height: 2.5px; animation-duration: 3.5s; }
+        .star:nth-child(5) { top: 25%; left: 70%; width: 2px; height: 2px; animation-duration: 2.2s; }
+        .star:nth-child(6) { top: 55%; left: 20%; width: 1.8px; height: 1.8px; animation-duration: 2.8s; }
+        .star:nth-child(7) { top: 90%; left: 45%; width: 3px; height: 3px; animation-duration: 3.2s; }
+        .star:nth-child(8) { top: 10%; left: 50%; width: 2px; height: 2px; animation-duration: 2s; }
+        .star:nth-child(9) { top: 70%; left: 35%; width: 2.2px; height: 2.2px; animation-duration: 2.7s; }
+        .star:nth-child(10) { top: 30%; left: 15%; width: 1.5px; height: 1.5px; animation-duration: 3.1s; }
+
+        /* ========= 主内容区 —— 完全透明，无任何卡片样式 ========= */
+        .content {
+            position: relative;
+            z-index: 20;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* 无背景、无模糊、无边框、无阴影的纯文本容器 */
+        .transparent-container {
+            max-width: 820px;
+            width: 100%;
+            text-align: center;
+            background: transparent;
+            backdrop-filter: none;
+            border: none;
+            box-shadow: none;
+            padding: 0.5rem;
+        }
+
+        /* 语言切换按钮（半透明浮动感，但不作为卡片） */
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .lang-btn {
+            background: rgba(0, 200, 255, 0.2);
+            border: 1px solid rgba(0, 200, 255, 0.5);
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #c4e6ff;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        .lang-btn.active {
+            background: #00b4ff;
+            color: #0a0f1c;
+            border-color: #00b4ff;
+            box-shadow: 0 0 12px rgba(0,180,255,0.4);
+        }
+
+        .lang-btn:hover {
+            background: rgba(0, 180, 255, 0.5);
+            color: white;
+        }
+
+        /* 邮箱主体动画 */
+        .email-hero {
+            text-align: center;
+            margin: 1rem 0 1rem;
+            animation: levitate 3.5s infinite ease-in-out;
+        }
+
+        @keyframes levitate {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .email-label {
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 400;
+            color: #7bb3ff;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        .email-address {
+            font-size: 2.7rem;
+            font-weight: 700;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: linear-gradient(135deg, #FFFFFF, #88ddff, #5bc0ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            word-break: break-word;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .email-hint {
+            font-size: 0.75rem;
+            color: #8bb5e0;
+            background: rgba(0, 100, 150, 0.25);
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px;
+            margin-top: 0.6rem;
+            backdrop-filter: blur(4px);
+        }
+
+        /* 复制按钮区 */
+        .copy-zone {
+            margin: 1.8rem 0 2rem;
+            text-align: center;
+        }
+
+        .copy-action {
+            background: rgba(0, 200, 255, 0.15);
+            border: 1px solid rgba(0, 200, 255, 0.6);
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #e0f0ff;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        .copy-action:hover {
+            background: #00b4ff30;
+            border-color: #00b4ff;
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(0,180,255,0.3);
+        }
+
+        /* 速度展示区 */
+        .speed-metrics {
+            margin: 1rem auto 0.5rem;
+            max-width: 400px;
+            border-top: 1px solid rgba(0, 200, 255, 0.3);
+            padding-top: 1.5rem;
+            text-align: center;
+        }
+
+        .speed-stats {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .speed-stats span:first-child {
+            font-weight: 500;
+            color: #9bc0ff;
+            text-shadow: 0 0 4px rgba(0,0,0,0.3);
+        }
+
+        .speed-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: monospace;
+            color: #ffffff;
+            line-height: 1;
+            text-shadow: 0 0 8px rgba(0,200,255,0.5);
+        }
+
+        .speed-unit {
+            font-size: 0.9rem;
+            color: #8bb5e0;
+        }
+
+        .speed-note {
+            font-size: 0.7rem;
+            color: #7a9bc5;
+            margin-top: 0.6rem;
+        }
+
+        /* 脉冲加载条 */
+        .pulse-bar {
+            width: 180px;
+            height: 2px;
+            background: rgba(0, 200, 255, 0.25);
+            border-radius: 10px;
+            margin: 1rem auto 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pulse-bar::after {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, #00b4ff, #88ddff);
+            border-radius: 10px;
+            animation: pulseMove 1.8s infinite alternate;
+        }
+
+        @keyframes pulseMove {
+            0% { left: 0; width: 20%; }
+            100% { left: 60%; width: 40%; }
+        }
+
+        .footer-cosmic {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #6f96c0;
+            letter-spacing: 1px;
+            text-shadow: 0 0 4px rgba(0,0,0,0.3);
+        }
+
+        /* 版权声明 - 纯透明星空风格，与域名 gb.ooo 完美融合 */
+        .copyright-starlight {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.65rem;
+            color: #5d82ae;
+            letter-spacing: 1px;
+            text-shadow: 0 0 4px rgba(0,0,0,0.3);
+            backdrop-filter: none;
+            background: transparent;
+            border: none;
+            opacity: 0.85;
+            transition: opacity 0.2s;
+            padding-bottom: 0.25rem;
+        }
+        .copyright-starlight:hover {
+            opacity: 1;
+            color: #88bbff;
+        }
+        /* 保持响应式 */
+        @media (max-width: 580px) {
+            .email-address { font-size: 1.7rem; }
+            .speed-number { font-size: 1.8rem; }
+            .orb1, .orb2, .orb3 { display: none; }
+            .copyright-starlight { font-size: 0.55rem; }
+        }
+
+        /* Toast 通知 */
+        .toast-notify {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: rgba(10, 20, 40, 0.9);
+            backdrop-filter: blur(20px);
+            color: #c2e4ff;
+            padding: 8px 24px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #5bc0ff;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+            font-family: monospace;
+        }
+
+        .toast-notify.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+    </style>
+</head>
+<body>
+
+<!-- 动态宇宙背景层（已彻底移除网格方块） -->
+<div class="bg-universe">
+    <div class="aurora"></div>
+    <!-- 网格元素已删除，背景不再有任何方块/网格线条 -->
+    <div class="geo-ring"></div>
+    <div class="geo-ring"></div>
+    <div class="geo-ring"></div>
+    <div class="energy-orb orb1"></div>
+    <div class="energy-orb orb2"></div>
+    <div class="energy-orb orb3"></div>
+    <div class="star-stream">
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div>
+    </div>
+</div>
+
+<div class="content">
+    <!-- 完全透明容器，无任何卡片样式 -->
+    <div class="transparent-container">
+        <div class="lang-bar">
+            <button class="lang-btn active" data-lang="en">🌌 EN</button>
+            <button class="lang-btn" data-lang="zh">🌠 中文</button>
+        </div>
+
+        <div class="email-hero">
+            <div class="email-label" id="emailLabel">✦ INTERSTELLAR CONTACT ✦</div>
+            <div>
+                <span class="email-address" id="emailDisplay">Hello#DomainName.Plus</span>
+            </div>
+            <div class="email-hint" id="emailHint">( # → @ to reach the stars )</div>
+        </div>
+
+        <div class="copy-zone">
+            <div class="copy-action" id="copyBtn">
+                <span>⚡</span> <span id="copyBtnText">Copy real email</span> <span>✨</span>
+            </div>
+        </div>
+
+        <div class="speed-metrics">
+            <div class="speed-stats">
+                <span id="speedLabel">✦ LIGHTSPEED LOAD ✦</span>
+                <span class="speed-number" id="speedValue">—</span>
+                <span class="speed-unit" id="speedUnit">ms</span>
+            </div>
+            <div class="speed-note" id="speedNote">(real navigation time)</div>
+            <div class="pulse-bar"></div>
+        </div>
+
+        <div class="footer-cosmic" id="footerNote">
+            ✦ deep space signal · ready for your message ✦
+        </div>
+
+        <!-- 版权信息: 纯透明星际风格，加入域名 gb.ooo -->
+        <div class="copyright-starlight">
+            ✦ © 2026 <strong style="font-weight:500; letter-spacing:0.5px;">gb.ooo</strong> · deep space registry ✦
+        </div>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-notify">✔️ 已传送至剪贴板</div>
+
+<script>
+    (function() {
+        // 真实邮箱 & 展示防机器人格式
+        const REAL_EMAIL = "hello@domainname.plus";
+        const DISPLAY_EMAIL = "Hello#DomainName.Plus";
+
+        const texts = {
+            en: {
+                emailLabel: "✦ INTERSTELLAR CONTACT ✦",
+                emailHint: "( # → @ to reach the stars )",
+                copyBtnText: "Copy real email",
+                speedLabel: "✦ LIGHTSPEED LOAD ✦",
+                speedUnit: "ms",
+                speedNote: "(real navigation time)",
+                footerNote: "✦ deep space signal · ready for your message ✦",
+                copySuccess: "✔️ Email transferred to clipboard",
+                copyFail: "⚠️ Manual copy: hello@domainname.plus"
+            },
+            zh: {
+                emailLabel: "✦ 星际联络站 ✦",
+                emailHint: "( 将 # 替换为 @ 即可发信 )",
+                copyBtnText: "复制真实邮箱",
+                speedLabel: "✦ 光速加载耗时 ✦",
+                speedUnit: "毫秒",
+                speedNote: "(真实访问时间)",
+                footerNote: "✦ 深空信号 · 期待你的消息 ✦",
+                copySuccess: "✔️ 邮箱已复制到剪贴板",
+                copyFail: "⚠️ 请手动复制: hello@domainname.plus"
+            }
+        };
+
+        let currentLang = 'en';
+        let loadTimeMs = null;
+
+        const emailLabelEl = document.getElementById('emailLabel');
+        const emailHintEl = document.getElementById('emailHint');
+        const copyBtnSpan = document.getElementById('copyBtnText');
+        const speedLabelEl = document.getElementById('speedLabel');
+        const speedUnitEl = document.getElementById('speedUnit');
+        const speedNoteEl = document.getElementById('speedNote');
+        const footerNoteEl = document.getElementById('footerNote');
+        const speedValueSpan = document.getElementById('speedValue');
+        const copyButton = document.getElementById('copyBtn');
+        const toastEl = document.getElementById('toastMsg');
+        const emailDisplaySpan = document.getElementById('emailDisplay');
+
+        if (emailDisplaySpan) emailDisplaySpan.innerText = DISPLAY_EMAIL;
+
+        function measureLoadSpeed() {
+            const start = performance.now();
+            const finish = () => {
+                let total = Math.max(0, Math.round(performance.now() - start));
+                if (performance.getEntriesByType && performance.getEntriesByType('navigation').length) {
+                    const nav = performance.getEntriesByType('navigation')[0];
+                    if (nav && nav.loadEventEnd) {
+                        const navTime = Math.round(nav.loadEventEnd - nav.startTime);
+                        if (navTime > 0 && navTime < 10000) total = navTime;
+                    }
+                }
+                loadTimeMs = total;
+                speedValueSpan.textContent = loadTimeMs;
+            };
+            if (document.readyState === 'complete') {
+                finish();
+            } else {
+                window.addEventListener('load', finish);
+                document.addEventListener('DOMContentLoaded', () => {
+                    if (loadTimeMs === null) {
+                        speedValueSpan.textContent = Math.round(performance.now() - start);
+                    }
+                });
+            }
+        }
+
+        function copyRealEmail() {
+            if (!navigator.clipboard) {
+                fallbackCopy();
+                return;
+            }
+            navigator.clipboard.writeText(REAL_EMAIL).then(() => {
+                showToast(currentLang === 'en' ? texts.en.copySuccess : texts.zh.copySuccess);
+                animateCopyBtn();
+            }).catch(() => fallbackCopy());
+        }
+
+        function fallbackCopy() {
+            const textarea = document.createElement('textarea');
+            textarea.value = REAL_EMAIL;
+            textarea.style.position = 'fixed';
+            textarea.style.top = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            let ok = false;
+            try { ok = document.execCommand('copy'); } catch(e) {}
+            document.body.removeChild(textarea);
+            if (ok) {
+                showToast(currentLang === 'en' ? texts.en.copySuccess : texts.zh.copySuccess);
+            } else {
+                showToast(currentLang === 'en' ? texts.en.copyFail : texts.zh.copyFail);
+            }
+            animateCopyBtn();
+        }
+
+        function animateCopyBtn() {
+            if (copyButton) {
+                copyButton.style.transform = 'scale(0.96)';
+                setTimeout(() => { copyButton.style.transform = ''; }, 150);
+            }
+        }
+
+        function showToast(msg) {
+            if (!toastEl) return;
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            setTimeout(() => toastEl.classList.remove('show'), 2200);
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = texts[lang];
+            emailLabelEl.textContent = t.emailLabel;
+            emailHintEl.textContent = t.emailHint;
+            copyBtnSpan.textContent = t.copyBtnText;
+            speedLabelEl.textContent = t.speedLabel;
+            speedUnitEl.textContent = (lang === 'en') ? 'ms' : '毫秒';
+            speedNoteEl.textContent = t.speedNote;
+            footerNoteEl.textContent = t.footerNote;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+            const displayDiv = document.getElementById('emailDisplay');
+            if (displayDiv) {
+                displayDiv.setAttribute('title', lang === 'en' ? 'Double-click to copy real email' : '双击复制真实邮箱');
+            }
+        }
+
+        function bindDoubleClickCopy() {
+            const displayDiv = document.getElementById('emailDisplay');
+            if (displayDiv) {
+                displayDiv.style.cursor = 'pointer';
+                displayDiv.addEventListener('dblclick', (e) => {
+                    e.preventDefault();
+                    copyRealEmail();
+                    displayDiv.style.transform = 'scale(0.98)';
+                    setTimeout(() => { displayDiv.style.transform = ''; }, 120);
+                });
+            }
+        }
+
+        function bindEvents() {
+            if (copyButton) {
+                copyButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    copyRealEmail();
+                });
+            }
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.getAttribute('data-lang');
+                    if (lang === 'en' || lang === 'zh') setLanguage(lang);
+                });
+            });
+            bindDoubleClickCopy();
+        }
+
+        measureLoadSpeed();
+        setLanguage('en');
+        bindEvents();
+    })();
+</script>
+</body>
+</html>
